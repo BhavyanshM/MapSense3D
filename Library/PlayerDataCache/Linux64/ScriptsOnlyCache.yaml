@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - BoxPlayer
     - CamNavigator
+    - DepthCamera
     - PlanarRegionSubscriber
     - RosSharp.RosBridgeClient.PoseStampedPublisher
     - RosSharp.RosBridgeClient.PoseStampedSubscriber
@@ -46,6 +47,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 11420}
+    - Class: 114
+      Script: {instanceID: 11918}
     - Class: 114
       Script: {instanceID: 12512}
     - Class: 114
