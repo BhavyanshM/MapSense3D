@@ -5,6 +5,7 @@ ScriptsOnlyBuild:
     - CamNavigator
     - DepthCamera
     - PlanarRegionSubscriber
+    - RosSharp.RosBridgeClient.ImagePublisher
     - RosSharp.RosBridgeClient.PoseStampedPublisher
     - RosSharp.RosBridgeClient.PoseStampedSubscriber
     - RosSharp.RosBridgeClient.RosConnector
@@ -55,6 +56,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 12522}
     - Class: 114
       Script: {instanceID: 12542}
+    - Class: 114
+      Script: {instanceID: 12604}
     - Class: 114
       Script: {instanceID: 12802}
     - Class: 114
@@ -332,7 +335,7 @@ ScriptsOnlyBuild:
     className: LaserScanVisualizerSpheres
   - hash:
       serializedVersion: 2
-      Hash: 70d5ae9cf7f83bdbcc75880044866e84
+      Hash: d92c12d6621d8dd5f8c5633eb2583154
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DepthCamera
@@ -578,7 +581,7 @@ ScriptsOnlyBuild:
     className: JointStatePublisher
   - hash:
       serializedVersion: 2
-      Hash: 40c9359758686abcd0b6fd7064d6581c
+      Hash: 4c6d4b35ccc9515d14a6de1ec8428ede
     assemblyName: Assembly-CSharp.dll
     namespaceName: RosSharp.RosBridgeClient
     className: ImagePublisher
