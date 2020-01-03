@@ -43,8 +43,7 @@
             {
                 float depth = tex2D(_CameraDepthTexture, i.uv).r;   
                 depth = Linear01Depth(depth);
-                depth = depth * _ProjectionParams.z*0.07;
-
+                depth = depth * _ProjectionParams.z*0.04;
                 return depth;
             }
 
