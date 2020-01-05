@@ -1,4 +1,4 @@
-﻿using System.IO; 
+using System.IO; 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +18,7 @@ public class DepthCamera : MonoBehaviour
     // Update is called once per frame
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-    	Graphics.Blit(source, destination, mat); 
+    	// Graphics.Blit(source, destination, mat); 
         // Debug.Log("RT_Width:" + rentex.width + "\tRT_Height:" + rentex.height);
         // if(saved == false){
         	// Debug.Log("SAVED_PNG_Texture2D");
