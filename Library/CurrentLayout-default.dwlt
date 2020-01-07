@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 875, y: 392}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 0
 --- !u!114 &2
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 678, y: 342}
   m_MaxSize: {x: 12003, y: 8042}
   vertical: 0
-  controlID: 16
+  controlID: 85
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -151,7 +151,7 @@ MonoBehaviour:
     y: 0
     width: 960
     height: 1001
-  m_MinSize: {x: 875, y: 392}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &7
 MonoBehaviour:
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 342}
   m_MaxSize: {x: 8002, y: 8042}
   vertical: 1
-  controlID: 17
+  controlID: 90
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -301,7 +301,7 @@ MonoBehaviour:
     height: 275
   m_ViewDataDictionary: {fileID: 0}
   m_VertSplit:
-    ID: 326
+    ID: 449
     splitterInitialOffset: 472
     currentActiveSplitter: -1
     realSizes: 9a00000064000000
@@ -867,19 +867,19 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/RosSharp/Scripts/RosBridgeClient/RosCommuncation
   m_ViewMode: 1
   m_StartGridSize: 67
   m_LastFolders:
-  - Assets
+  - Assets/RosSharp/Scripts/RosBridgeClient/RosCommuncation
   m_LastFoldersGridSize: 67
   m_LastProjectPath: /home/quantum/Workspace/Storage/Unity3D/Projects/LinuxG
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 16350000
-    m_LastClickedID: 13590
+    m_SelectedIDs: 42350000
+    m_LastClickedID: 13634
     m_ExpandedIDs: 00000000fe34000000350000023500000435000006350000083500000a3500000c3500000e3500001035000012350000143500001635000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -933,8 +933,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 7e340000
-    m_LastClickedInstanceID: 13438
+    m_SelectedInstanceIDs: c6340000
+    m_LastClickedInstanceID: 13510
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
@@ -1093,9 +1093,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.1987951, y: -2.71426, z: 1.5191898}
+    m_Target: {x: -0.019023089, y: -1.2987823, z: -0.29077768}
     speed: 2
-    m_Value: {x: 1.1987951, y: -2.71426, z: 1.5191898}
+    m_Value: {x: -0.019023089, y: -1.2987823, z: -0.29077768}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1141,13 +1141,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.009369533, y: 0.7139052, z: -0.70034474, w: -0.009599544}
+    m_Target: {x: 0.00092947256, y: 0.7706928, z: -0.6374561, w: 0.0012924266}
     speed: 2
-    m_Value: {x: -0.009368018, y: 0.7137898, z: -0.70023155, w: -0.0095979925}
+    m_Value: {x: 0.0009293238, y: 0.77056944, z: -0.6373541, w: 0.0012922197}
   m_Size:
-    m_Target: 10.924197
+    m_Target: 15.8665285
     speed: 2
-    m_Value: 11.43895
+    m_Value: 15.8665285
   m_Ortho:
     m_Target: 0
     speed: 2
