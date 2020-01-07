@@ -79,6 +79,7 @@ namespace RosSharp.RosBridgeClient
             RenderTexture.active = rTex;
             texture2D.ReadPixels(rect, 0, 0);
             texture2D.Apply();
+            // Debug.Log(texture2D.GetPixel(384,512));
             message.data = ImageConversion.EncodeToPNG(texture2D);
             Publish(message);
 

@@ -6,6 +6,8 @@
     }
     SubShader
     {
+    	Tags {"RenderType" = "Opaque"}
+
         // No culling or depth
         Cull Off ZWrite Off ZTest Always
 
@@ -41,10 +43,23 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float depth = tex2D(_CameraDepthTexture, i.uv).r;   
-                depth = Linear01Depth(depth);
-                depth = depth * _ProjectionParams.z*0.04;
-                return depth;
+                float depth01 = LinearEyeDepth(UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, i.uv))) / 10;
+             
+                //depth = Linear01Depth(depth);
+            	//float scale = 0.08;
+                
+                //depth = depth * _ProjectionParams.z;
+                //depth = depth * scale;
+                //return depth;
+
+				float lowBits = floor(depth01 * 256) / 256;
+				float medBits = 256 * (depth01 - lowBits);
+				medBits = floor(256 * medBits) / 256;
+				//float highBits = 256 * 256 * (depth01 - lowBits - medBits / 256);
+			  	//highBits = floor(256 * highBits) / 256;
+
+				return fixed4(lowBits, medBits, 0.0, 0.0);
+
             }
 
 
