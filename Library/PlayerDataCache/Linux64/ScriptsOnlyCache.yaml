@@ -18,9 +18,14 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.Dropdown
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Mask
+    - UnityEngine.UI.ScrollRect
+    - UnityEngine.UI.Scrollbar
     - UnityEngine.UI.Text
+    - UnityEngine.UI.Toggle
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -58,13 +63,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11324}
     - Class: 114
+      Script: {instanceID: 11328}
+    - Class: 114
       Script: {instanceID: 11368}
     - Class: 114
       Script: {instanceID: 11420}
     - Class: 114
+      Script: {instanceID: 11706}
+    - Class: 114
       Script: {instanceID: 11804}
     - Class: 114
       Script: {instanceID: 11918}
+    - Class: 114
+      Script: {instanceID: 12022}
     - Class: 114
       Script: {instanceID: 12512}
     - Class: 114
@@ -80,7 +91,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13106}
     - Class: 114
+      Script: {instanceID: 13124}
+    - Class: 114
       Script: {instanceID: 13140}
+    - Class: 114
+      Script: {instanceID: 13154}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
