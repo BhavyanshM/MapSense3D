@@ -58,6 +58,7 @@
 				//float highBits = 256 * 256 * (depth01 - lowBits - medBits / 256);
 			  	//highBits = floor(256 * highBits) / 256;
 
+
 				return fixed4(lowBits, medBits, 0.0, 0.0);
 
             }
