@@ -58,7 +58,7 @@
 
             	g2f OUT[3];
 
-            	float shift = 0.2;
+            	float shift = 0.5;
 
             	OUT[0].normal = IN[0].normal;
             	OUT[0].position = UnityObjectToClipPos(IN[0].position) + normal*shift;
