@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using map_sense = RosSharp.RosBridgeClient.MessageTypes.MapSense;
+using sensor = RosSharp.RosBridgeClient.MessageTypes.Sensor;
 using RosSharp.RosBridgeClient;
 
 [RequireComponent(typeof(RosConnector))]
@@ -14,14 +15,14 @@ public class PlanarRegionSubscriber : MonoBehaviour
     void Start()
     {
         rosConnector = GetComponent<RosConnector>();
-        string subscription_id = rosConnector.RosSocket.Subscribe<map_sense.PlanarRegion>("/planar_regions", PlaneMsgHandler);
+        string subscription_id = rosConnector.RosSocket.Subscribe<sensor.CompressedImage>("/map/regions", RegionMsgHandler);
         Debug.Log("Subscribed:"+subscription_id);
     }
 
-    private static void PlaneMsgHandler(map_sense.PlanarRegion message)
+    private static void RegionMsgHandler(sensor.CompressedImage message)
     {
     	// for(int i = 0; i<10; i++)
-     //    	Debug.Log(message.polygon.polygon.points[i].x + " " + message.polygon.polygon.points[i].y + " " + message.polygon.polygon.points[i].z);
+        	Debug.Log(message.header.seq);
     }
 
 
