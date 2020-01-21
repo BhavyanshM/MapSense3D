@@ -30,7 +30,7 @@ namespace RosSharp.RosBridgeClient
         {
 			base.Start();
             texture2D = new Texture2D(1, 1);
-            meshRenderer.material = new Material(Shader.Find("Standard"));
+            meshRenderer.material = new Material(Shader.Find("Custom/Tessellation"));
         }
         private void Update()
         {

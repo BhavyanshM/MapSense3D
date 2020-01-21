@@ -41,10 +41,14 @@
 
             v2g vert (appdata_full v)
             {
+            	float4 uv = float4(v.texcoord.xy, 0, 0);
+            	float4 col = tex2Dlod(_MainTex, uv);
                 v2g o;
                 o.position = v.vertex;
+                o.position.y += col.x*4;
                 o.normal = v.normal;
-                o.uv = v.texcoord ;
+                o.uv = v.texcoord;
+                //o.uv = TRANSFORM_TEX(v.texcoord, _MainTex) ;
                 return o;
             }
 
@@ -58,7 +62,7 @@
 
             	g2f OUT[3];
 
-            	float shift = 0.5;
+            	float shift = 0.0;
 
             	OUT[0].normal = IN[0].normal;
             	OUT[0].position = UnityObjectToClipPos(IN[0].position) + normal*shift;
@@ -82,6 +86,7 @@
             {
 
                 float4 col = tex2D(_MainTex, v.uv);
+                //float4 col = float4(1,1,1,1);
                 
                 return col;
             }

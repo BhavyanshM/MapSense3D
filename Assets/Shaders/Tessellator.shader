@@ -1,7 +1,8 @@
-﻿Shader "OpenGL4_triangle_tessellation"
+﻿Shader "Custom/Tessellation"
 {
 	Properties
 	{
+		_MainTex ("Texture", 2D) = "white" {}
 		_factor("Tessellation scale",Range(1.0,64.0)) = 4.0
 	}
 	SubShader
@@ -63,7 +64,7 @@
 				out vec4 color;
 				void main()
 				{
-					color = vec4(1.0, 1.0, 1.0, 1.0);
+					color = vec4(1,1,1,1);
 				}
 			#endif
            
