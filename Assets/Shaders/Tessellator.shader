@@ -7,7 +7,7 @@
 	}
 	SubShader
 	{
-		Cull Off
+		//Cull Off
 		Pass
 		{
 			GLSLPROGRAM
@@ -18,7 +18,7 @@
 				in  vec4 in_POSITION0;
 				void main()
 				{
-					gl_Position =  gl_ModelViewProjectionMatrix * in_POSITION0;
+					gl_Position =  in_POSITION0;
 				}
 			#endif
 
@@ -62,11 +62,14 @@
 				    vec3 n1 = cross(a.xyz-b.xyz,b.xyz-e.xyz);
 				    vec3 n2 = cross(a.xyz-e.xyz,e.xyz-f.xyz);
 
-				    vec3 normal = normalize(n0);
+				    vec4 normal = vec4(normalize(n0 + n1 + n2),1);
 
-				    vec4 pos = mix(p1, p2, v);
+				    float scale = 0.5;
+				    float height = scale * (pow(-(u-0.5),2) - pow(-(v-0.5),3));
 
-				    gl_Position = pos + (3*pow(u-0.5,3) - 10*pow(v-0.5,2))*vec4(normal*2.5,1);
+				    vec4 pos = mix(p1, p2, v) + normal*0.5;
+
+				    gl_Position = gl_ModelViewProjectionMatrix * pos;
 				}
 			#endif
 
