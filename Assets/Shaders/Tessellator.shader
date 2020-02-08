@@ -24,7 +24,7 @@
 
 			#ifdef HULL          //GLSL Tessellation Control Shader
 
-				layout (vertices = 6) out;
+				layout (vertices = 4) out;
 				void main()
 				{
 					if (gl_InvocationID == 0)
@@ -55,19 +55,33 @@
 					float u = gl_TessCoord.x;
 					float v = gl_TessCoord.y;
 
-					vec4 p1 = mix(c, e, u);
-				    vec4 p2 = mix(b, f, u);
 
-				    vec3 n0 = cross(a.xyz-b.xyz,b.xyz-c.xyz);
-				    vec3 n1 = cross(a.xyz-b.xyz,b.xyz-e.xyz);
-				    vec3 n2 = cross(a.xyz-e.xyz,e.xyz-f.xyz);
+					// Quad
+					//vec4 p1 = mix(c, e, u);
+				    //vec4 p2 = mix(b, f, u);
+				    //vec3 n0 = cross(c.xyz-e.xyz,e.xyz-d.xyz);
+				    //vec3 n1 = cross(b.xyz-c.xyz,e.xyz-f.xyz);
+				    //vec3 n2 = cross(c.xyz-d.xyz,f.xyz-a.xyz);
 
-				    vec4 normal = vec4(normalize(n0 + n1 + n2),1);
+				    // QuadPlane
+					vec4 p1 = mix(b, a, u);
+				    vec4 p2 = mix(c, d, u);
+				    vec3 n0 = cross(b.xyz-a.xyz,b.xyz-c.xyz);
+				    vec3 n1 = cross(b.xyz-c.xyz,e.xyz-f.xyz);
+				    vec3 n2 = cross(c.xyz-d.xyz,f.xyz-a.xyz);
 
-				    float scale = 0.5;
-				    float height = scale * (pow(-(u-0.5),2) - pow(-(v-0.5),3));
+				    // Plane
+					//vec4 p1 = mix(a, c, u);
+					//vec4 p2 = mix(a, b, u);		
+					//vec3 n0 = cross(a.xyz-b.xyz,b.xyz-c.xyz);		    
 
-				    vec4 pos = mix(p1, p2, v) + normal*0.5;
+
+				    vec4 normal = vec4(normalize(n0),1);
+
+				    float scale = 0.01;
+				    float height = scale * (pow((u-0.5),2) + pow((v-0.5),2));
+
+				    vec4 pos = mix(p1, p2, v) - normal*height;
 
 				    gl_Position = gl_ModelViewProjectionMatrix * pos;
 				}
