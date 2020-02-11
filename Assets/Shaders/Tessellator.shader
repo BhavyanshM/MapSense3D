@@ -81,7 +81,7 @@
 				    float scale = 0.01;
 				    float height = scale * (pow((u-0.5),2) + pow((v-0.5),2));
 
-				    vec4 pos = mix(p1, p2, v) + normal*height;
+				    vec4 pos = mix(p1, p2, v) - normal*(a.y+a.x);
 
 				    gl_Position = gl_ModelViewProjectionMatrix * pos;
 				}
