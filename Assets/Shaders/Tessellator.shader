@@ -30,13 +30,14 @@
 				{
 					if (gl_InvocationID == 0)
 					{
-						gl_TessLevelInner[0] = _factor;   //Inside tessellation factor
-						gl_TessLevelInner[1] = _factor;   //Inside tessellation factor
+						float tessLevel = 16.0;
+						gl_TessLevelInner[0] = tessLevel;   //Inside tessellation factor
+						gl_TessLevelInner[1] = tessLevel;   //Inside tessellation factor
 
-						gl_TessLevelOuter[0] = _factor;   //Edge tessellation factor
-						gl_TessLevelOuter[1] = _factor;   //Edge tessellation factor
-						gl_TessLevelOuter[2] = _factor;   //Edge tessellation factor
-						gl_TessLevelOuter[3] = _factor;   //Edge tessellation factor
+						gl_TessLevelOuter[0] = tessLevel;   //Edge tessellation factor
+						gl_TessLevelOuter[1] = tessLevel;   //Edge tessellation factor
+						gl_TessLevelOuter[2] = tessLevel;   //Edge tessellation factor
+						gl_TessLevelOuter[3] = tessLevel;   //Edge tessellation factor
 					} 
 					gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
 				}
@@ -80,12 +81,16 @@
 				    vec4 normal = vec4(normalize(n0),1);
 
 				    float scale = 0.01;
-				    float height = scale * (pow((u-0.5),2) + pow((v-0.5),2));
+
+				    float x = u - 0.5;
+				    float y = v - 0.5;
+
+				    float height = scale * (-10.0*pow(x,2)+pow(y,3)-pow(y,2)+1.0)*0.002;
 
 				    //vec4 high4 = texture(_MainTex, vec2(x, fragCoordNewAPI.y / MM)/float(MAXSIZE), 0.0);
 
 
-				    vec4 pos = mix(p1, p2, v) - normal*(a.y+a.x);
+				    vec4 pos = mix(p1, p2, v) + normal*height;
 
 				    gl_Position = gl_ModelViewProjectionMatrix * pos;
 				}
