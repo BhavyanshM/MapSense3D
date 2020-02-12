@@ -13,6 +13,7 @@
 			GLSLPROGRAM
 			#version 460     
 			uniform float _factor;
+			uniform sampler2D _MainTex;
 			
 			#ifdef VERTEX
 				in  vec4 in_POSITION0;
@@ -80,6 +81,9 @@
 
 				    float scale = 0.01;
 				    float height = scale * (pow((u-0.5),2) + pow((v-0.5),2));
+
+				    //vec4 high4 = texture(_MainTex, vec2(x, fragCoordNewAPI.y / MM)/float(MAXSIZE), 0.0);
+
 
 				    vec4 pos = mix(p1, p2, v) - normal*(a.y+a.x);
 
