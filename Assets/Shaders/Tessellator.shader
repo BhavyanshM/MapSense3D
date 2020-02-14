@@ -1,4 +1,4 @@
-﻿Shader "Custom/Tessellation"
+Shader "Custom/Tessellation"
 {
 	Properties
 	{
@@ -80,15 +80,23 @@
 
 				    vec4 normal = vec4(normalize(n0),1);
 
-				    float scale = 0.01;
+				    float scale = 0.001;
 
-				    float x = u - 0.5;
-				    float y = v - 0.5;
+				    float x = u*10 - 5;
+				    float y = v*10 - 5;
 
-				    float height = scale * (-10.0*pow(x,2)+pow(y,3)-pow(y,2)+1.0)*0.002;
+				    vec4 plow = texture(_MainTex, vec2(a.x, a.y));
+				    vec4 phigh= texture(_MainTex, vec2(48+a.x, a.y));
 
-				    //vec4 high4 = texture(_MainTex, vec2(x, fragCoordNewAPI.y / MM)/float(MAXSIZE), 0.0);
-
+				    float height = scale * (
+				    	plow.x*pow(x,3)  +
+				    	plow.y*pow(x,2)  +
+				    	plow.z*pow(x,1)  + 
+				    	plow.w*pow(y,3)  + 
+				    	phigh.x*pow(y,2) +
+				    	phigh.y*pow(y,1) +
+				    	phigh.z
+				    );
 
 				    vec4 pos = mix(p1, p2, v) + normal*height;
 
