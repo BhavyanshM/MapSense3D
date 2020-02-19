@@ -29,7 +29,7 @@ namespace RosSharp.RosBridgeClient
         protected override void Start()
         {
 			base.Start();
-            texture2D = new Texture2D(1, 1);
+            texture2D = new Texture2D(1, 1, TextureFormat.RGBAFloat, false);
             meshRenderer.material = new Material(Shader.Find("Custom/Tessellation"));
         }
         private void Update()
@@ -47,6 +47,16 @@ namespace RosSharp.RosBridgeClient
         private void ProcessMessage()
         {
             texture2D.LoadImage(imageData);
+            for(int i = 0; i<64; i++){
+                for(int j = 0; j<96; j++){
+                    Debug.LogFormat("{0},{1}:({2},{3},{4},{5})", i, j, 
+                            texture2D.GetPixel(i,j).b,
+                            texture2D.GetPixel(i,j).g,
+                            texture2D.GetPixel(i,j).r,
+                            texture2D.GetPixel(i,j).a
+                    );
+                }
+            }
             texture2D.Apply();
             meshRenderer.material.SetTexture("_MainTex", texture2D);
             isMessageReceived = false;
