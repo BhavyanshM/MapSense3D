@@ -14,6 +14,7 @@ Shader "Custom/Tessellation"
 			#version 460     
 			uniform float _factor;
 			uniform sampler2D _MainTex;
+			uniform float regions[1536];
 			
 			#ifdef VERTEX
 				in  vec4 in_POSITION0;
@@ -88,17 +89,9 @@ Shader "Custom/Tessellation"
 				    vec4 plow = texture(_MainTex, vec2(0,0));
 				    vec4 phigh= texture(_MainTex, vec2(62,0));
 
-				    float height = scale * (
-				    	plow.x*pow(x,3)  +
-				    	plow.y*pow(x,2)  +
-				    	plow.z*pow(x,1)  + 
-				    	plow.w*pow(y,3)  + 
-				    	phigh.x*pow(y,2) +
-				    	phigh.y*pow(y,1) +
-				    	phigh.z
-				    );
+				    float height = scale * (pow(x,2) + pow(y,2));
 
-				    vec4 pos = mix(p1, p2, v) + normal*((plow.x)*(-0.012));
+				    vec4 pos = mix(p1, p2, v) + normal*((plow.x)*(-0.012))*height;
 
 				    gl_Position = gl_ModelViewProjectionMatrix * pos;
 				}
