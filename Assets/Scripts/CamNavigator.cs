@@ -9,19 +9,24 @@ public class CamNavigator : MonoBehaviour
 
 	protected Vector3 LocalRotation;
 	protected Vector3 LocalTranslation;
-	protected float CamDistance = 10f;
+	protected float CamDistance = 50f;
 
-	public float shiftSensitivity = 0.05f;
-	public float MouseSensitivity = 4f;
-	public float ScrollSensitivity = 2f;
-	public float OrbitDampening = 10f;
-	public float ScrollDampening = 5f;
+	private float SideShiftSensitivity = 1f;
+	private float ForwardShiftSensitivity = 1.5f;
+	private float MouseSensitivity = 3f;
+	private float ScrollSensitivity = 10f;
+	private float OrbitDampening = 10f;
+	private float ScrollDampening = 8f;
+	private float ClipDistance = 250f;
 
 	public bool CameraDisabled = false;
+
+	public Renderer sphereRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
+    	sphereRenderer.enabled = false;
         this.CamTF = this.transform;
         this.CamParentTF = this.transform.parent;
     }
@@ -39,23 +44,31 @@ public class CamNavigator : MonoBehaviour
 
         if(!CameraDisabled){
         	if((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) && Input.GetMouseButton(0)){
+        		sphereRenderer.enabled = true;
         		LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
         		LocalRotation.y += -Input.GetAxis("Mouse Y") * MouseSensitivity;
         	}
 
         	if((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) && Input.GetMouseButton(1)){
+        		sphereRenderer.enabled = true;
         		LocalTranslation.x = Input.GetAxis("Mouse X") * MouseSensitivity;
         		LocalTranslation.y = Input.GetAxis("Mouse Y") * MouseSensitivity;
-        		this.CamParentTF.position += new Vector3(Mathf.Cos(this.CamParentTF.rotation.x) * LocalTranslation.x * shiftSensitivity * Time.deltaTime,
-        												 0, 
-        												 Mathf.Sin(this.CamParentTF.rotation.x) * LocalTranslation.y * shiftSensitivity * Time.deltaTime);
+        		Vector3 rt = Vector3.right;
+        		Vector3 fwd = transform.TransformVector(rt);
+        		Vector3 perp = new Vector3(fwd.z, 0, -fwd.x);
+        		this.CamParentTF.Translate(-rt * LocalTranslation.x * SideShiftSensitivity * Time.deltaTime);
+        		this.CamParentTF.Translate(perp * LocalTranslation.y * Time.deltaTime * ForwardShiftSensitivity, Space.World);
         	}
 
         	if(Input.GetAxis("Mouse ScrollWheel") != 0){
         		float ScrollAmount = Input.GetAxis("Mouse ScrollWheel") * ScrollSensitivity;
         		ScrollAmount *= (this.CamDistance * 0.3f);
         		this.CamDistance += ScrollAmount * -1f;
-        		this.CamDistance = Mathf.Clamp(this.CamDistance, 1.5f, 100f);
+        		this.CamDistance = Mathf.Clamp(this.CamDistance, 1.5f, ClipDistance);
+        	}
+
+        	if(Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)){
+        		sphereRenderer.enabled = false;
         	}
         }
 
@@ -63,7 +76,7 @@ public class CamNavigator : MonoBehaviour
         this.CamParentTF.rotation = Quaternion.Lerp(this.CamParentTF.rotation, QT, Time.deltaTime * OrbitDampening);
 
 
-        if(this.CamTF.localPosition.z != this.CamDistance * -1f){
+        if(this.CamTF.localPosition.z != this.CamDistance * -10f){
         	this.CamTF.localPosition = new Vector3(0f, 0f, Mathf.Lerp(this.CamTF.localPosition.z, this.CamDistance * -1f, Time.deltaTime * ScrollDampening));
         }
     }

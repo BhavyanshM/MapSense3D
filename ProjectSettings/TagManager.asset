@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PointMap
   - QuadMap
+  - RendererCamera
   layers:
   - Default
   - TransparentFX
