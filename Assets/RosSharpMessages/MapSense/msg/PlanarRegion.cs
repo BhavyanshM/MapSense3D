@@ -10,31 +10,27 @@
 using Newtonsoft.Json;
 
 using RosSharp.RosBridgeClient.MessageTypes.Std;
-using RosSharp.RosBridgeClient.MessageTypes.Geometry;
 
 namespace RosSharp.RosBridgeClient.MessageTypes.MapSense
 {
-    public class PlanarRegion : Message
+    public class PlanarRegions : Message
     {
         [JsonIgnore]
-        public const string RosMessageName = "map_sense/PlanarRegion";
+        public const string RosMessageName = "map_sense/PlanarRegions";
 
         public Header header;
-        public PolygonStamped polygon;
-        public Point32 normal;
+        public float[] data;
 
-        public PlanarRegion()
+        public PlanarRegions()
         {
             this.header = new Header();
-            this.polygon = new PolygonStamped();
-            this.normal = new Point32();
+            this.data = new float[0];
         }
 
-        public PlanarRegion(Header header, PolygonStamped polygon, Point32 normal)
+        public PlanarRegions(Header header, float[] data)
         {
             this.header = header;
-            this.polygon = polygon;
-            this.normal = normal;
+            this.data = data;
         }
     }
 }

@@ -21,7 +21,10 @@ public class QuadTreeRenderer : MonoBehaviour
 	private Vector2 startDown = new Vector2(l,-l);
 	private Vector2 endDown = new Vector2(-l,-l);
 
+	private QuadTree qt;
+
 	void Start(){
+		qt = new QuadTree();
 	}
 
 	void Update ()

@@ -13,6 +13,7 @@ public class CamNavigator : MonoBehaviour
 
 	private float SideShiftSensitivity = 1f;
 	private float ForwardShiftSensitivity = 1.5f;
+	private float UpShiftSensitivity = 0.1f;
 	private float MouseSensitivity = 3f;
 	private float ScrollSensitivity = 10f;
 	private float OrbitDampening = 10f;
@@ -60,6 +61,12 @@ public class CamNavigator : MonoBehaviour
         		this.CamParentTF.Translate(perp * LocalTranslation.y * Time.deltaTime * ForwardShiftSensitivity, Space.World);
         	}
 
+        	if(Input.GetKey(KeyCode.Mouse2)){
+        		sphereRenderer.enabled = true;
+        		LocalTranslation.z = -Input.GetAxis("Mouse Y") * MouseSensitivity;
+        		this.CamParentTF.Translate(Vector3.up * LocalTranslation.z * UpShiftSensitivity, Space.World);
+        	}
+
         	if(Input.GetAxis("Mouse ScrollWheel") != 0){
         		float ScrollAmount = Input.GetAxis("Mouse ScrollWheel") * ScrollSensitivity;
         		ScrollAmount *= (this.CamDistance * 0.3f);
@@ -67,7 +74,7 @@ public class CamNavigator : MonoBehaviour
         		this.CamDistance = Mathf.Clamp(this.CamDistance, 1.5f, ClipDistance);
         	}
 
-        	if(Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)){
+        	if(Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1) || Input.GetKeyUp(KeyCode.Mouse2)){
         		sphereRenderer.enabled = false;
         	}
         }

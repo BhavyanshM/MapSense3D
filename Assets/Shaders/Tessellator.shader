@@ -14,6 +14,14 @@ Shader "Custom/Tessellation"
 			#version 460     
 			uniform float _factor;
 			uniform sampler2D _MainTex;
+			uniform float regions[1536];
+
+			layout (std430, binding=2) buffer shader_data
+			{ 
+			  vec4 camera_position;
+			  vec4 light_position;
+			  vec4 light_diffuse;
+			};
 			
 			#ifdef VERTEX
 				in  vec4 in_POSITION0;
@@ -53,6 +61,8 @@ Shader "Custom/Tessellation"
 					vec4 d = gl_in[3].gl_Position;
 					vec4 e = gl_in[4].gl_Position;
 					vec4 f = gl_in[5].gl_Position;
+					vec4 g = gl_in[6].gl_Position;
+					vec4 h = gl_in[7].gl_Position;
 
 					float u = gl_TessCoord.x;
 					float v = gl_TessCoord.y;
@@ -68,7 +78,7 @@ Shader "Custom/Tessellation"
 				    // QuadPlane
 					vec4 p1 = mix(b, a, u);
 				    vec4 p2 = mix(c, d, u);
-				    vec3 n0 = cross(b.xyz-a.xyz,b.xyz-c.xyz);
+				    vec3 n0 = cross(a.xyz-b.xyz,c.xyz-b.xyz);
 				    vec3 n1 = cross(b.xyz-c.xyz,e.xyz-f.xyz);
 				    vec3 n2 = cross(c.xyz-d.xyz,f.xyz-a.xyz);
 
@@ -80,7 +90,7 @@ Shader "Custom/Tessellation"
 
 				    vec4 normal = vec4(normalize(n0),1);
 
-				    float scale = 0.001;
+				    float scale = 0.0005;
 
 				    float x = u*10 - 5;
 				    float y = v*10 - 5;
@@ -88,17 +98,9 @@ Shader "Custom/Tessellation"
 				    vec4 plow = texture(_MainTex, vec2(0,0));
 				    vec4 phigh= texture(_MainTex, vec2(62,0));
 
-				    float height = scale * (
-				    	plow.x*pow(x,3)  +
-				    	plow.y*pow(x,2)  +
-				    	plow.z*pow(x,1)  + 
-				    	plow.w*pow(y,3)  + 
-				    	phigh.x*pow(y,2) +
-				    	phigh.y*pow(y,1) +
-				    	phigh.z
-				    );
+				    float height = scale * (pow(x,3) + pow(y,3));
 
-				    vec4 pos = mix(p1, p2, v) + normal*((plow.x)*(-0.012));
+				    vec4 pos = mix(p1, p2, v) + normal*((-0.012))*height;
 
 				    gl_Position = gl_ModelViewProjectionMatrix * pos;
 				}
