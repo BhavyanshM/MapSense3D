@@ -15,6 +15,8 @@ public class PlanarRegionSubscriber : MonoBehaviour
     //private GameObject pointMap;
     private MeshRenderer renderer;
 
+    public ComputeBuffer cb;
+
 
 
     // Start is called before the first frame update
