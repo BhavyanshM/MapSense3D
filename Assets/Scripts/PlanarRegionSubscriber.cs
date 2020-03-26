@@ -13,7 +13,7 @@ public class PlanarRegionSubscriber : MonoBehaviour
     private byte[] msgData;
     private Texture2D dtex;
     //private GameObject pointMap;
-    private MeshRenderer renderer;
+    public MeshRenderer renderer;
 
     public ComputeBuffer cb;
 
