@@ -90,7 +90,7 @@ Shader "Custom/Tessellation"
 
 				    vec4 normal = vec4(normalize(n0),1);
 
-				    float scale = 0.0005;
+				    float scale = 0.5;
 
 				    float x = u*10 - 5;
 				    float y = v*10 - 5;
@@ -98,9 +98,9 @@ Shader "Custom/Tessellation"
 				    vec4 plow = texture(_MainTex, vec2(0,0));
 				    vec4 phigh= texture(_MainTex, vec2(62,0));
 
-				    float height = scale * (pow(x,3) + pow(y,3));
+				    float height = scale * (-b.x + -b.y);
 
-				    vec4 pos = mix(p1, p2, v) + normal*((-0.012))*height;
+				    vec4 pos = mix(p1, p2, v) + normal*height;
 
 				    gl_Position = gl_ModelViewProjectionMatrix * pos;
 				}

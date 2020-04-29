@@ -24,8 +24,8 @@ public class QuadTree
 
     public QuadTree(){
     	this.depth = 8;
-    	this.root = new Node(new Vector2(0,0), 8f);
-    	this.insert(root, new Vector2(34,78));
+    	// this.root = new Node(new Vector2(0,0), 8f);
+    	// this.insert(root, new Vector2(34,78));
     }
 
 	public int getMortonIndex(int x, int y){
@@ -36,10 +36,10 @@ public class QuadTree
 
 
 	public void insert(Node p, Vector2 pos){
-		int key = this.getMortonIndex((int)pos.x, (int)pos.y);
-		if(p.subnodes[key] == null){
-			p.subnodes[key] = new Node(new Vector2(pos.x + 2, pos.y+2), p.size/2);
-		}
+		// int key = this.getMortonIndex((int)pos.x, (int)pos.y);
+		// if(p.subnodes[key] == null){
+		// 	p.subnodes[key] = new Node(new Vector2(pos.x + 2, pos.y+2), p.size/2);
+		// }
 	}
 
 }

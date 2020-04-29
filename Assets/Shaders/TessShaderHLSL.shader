@@ -8,6 +8,7 @@ Shader "Custom/QuadTessellationHLSL"
 		{ 
 			Cull Off
 			CGPROGRAM
+			half Params_Array[504];
 			#pragma vertex TessellationVertexProgram
 			#pragma hull HullProgram
 			#pragma domain DomainProgram
@@ -36,7 +37,6 @@ Shader "Custom/QuadTessellationHLSL"
 				float2 uv : TEXCOORD0;
 			}; 
 
-			StructuredBuffer<float> params;
 // ---------------------------------------------------------------
 
 
@@ -94,11 +94,19 @@ Shader "Custom/QuadTessellationHLSL"
 				float3 n0 = cross(a.xyz-b.xyz,a.xyz-d.xyz);
 				float4 normal = float4(normalize(n0),1);
 
-				float scale = 0.000005;
+				float scale = 0.0001;
+
 				float x = UV.x*10 - 5;
 				float y = UV.y*10 - 5;
+
 				//float height = scale * (pow(x,3) + pow(y,3));
-				float height = a.x + a.y;
+
+				int i = int(a.x);
+				int j = int(a.y);
+
+
+
+				float height = Params_Array[0]*scale;
 
 				appdata data; 
 			   	data.vertex = vFinal + height * normal;
