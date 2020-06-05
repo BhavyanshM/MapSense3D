@@ -24,15 +24,19 @@ public class PlanarRegionSubscriber : MonoBehaviour
         paramData = new float[504];
         meshRenderer.material = new Material(Shader.Find("Custom/QuadTessellationHLSL"));
 
-        meshRenderer.material.SetFloatArray("Params_Array", paramData);
+        meshRenderer.material.SetFloatArray("Params", paramData);	
+        meshRenderer.material.SetFloatArray("Params1", paramData);	
     } 
 
     private void RegionMsgHandler(map_sense.PlanarRegions message)
     {
-        Debug.Log(message.data.Length);
+        // Debug.Log(message.data.Length);
 
         for(int i = 0; i<paramData.Length; i++){
         	paramData[i] = message.data[i];
+        	// if(i<8){
+        	// 	Debug.LogFormat("Number: {0} ",paramData[i]);
+        	// }
 
         }
 
@@ -43,7 +47,8 @@ public class PlanarRegionSubscriber : MonoBehaviour
 
         // paramData[0] += 1;
         // paramData[0] %= 100;
-        meshRenderer.material.SetFloatArray("Params_Array", paramData);
+        meshRenderer.material.SetFloatArray("Params", paramData);
+        meshRenderer.material.SetFloatArray("Params1", paramData);
 
 
     }
