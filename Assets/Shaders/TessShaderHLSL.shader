@@ -8,7 +8,16 @@ Shader "Custom/QuadTessellationHLSL"
 		{ 
 			Cull Off
 			CGPROGRAM
-			half Params[504];
+			
+			float Params0[192];
+			float Params1[192];
+			float Params2[192];
+			float Params3[192];
+			float Params4[192];
+			float Params5[192];
+			float Params6[192];
+			float Params7[192];
+			
 			#pragma vertex TessellationVertexProgram
 			#pragma hull HullProgram
 			#pragma domain DomainProgram
@@ -36,9 +45,8 @@ Shader "Custom/QuadTessellationHLSL"
 				float4 vertex : SV_POSITION;
 				float2 uv : TEXCOORD0;
 			}; 
-
 // ---------------------------------------------------------------
-
+        
 
 			v2f VertexProgram(appdata v) // Not the primary vertex program.
 			{
@@ -48,6 +56,7 @@ Shader "Custom/QuadTessellationHLSL"
 				return o;
 			}
 
+            // This is the Entry Point
 			ControlPoint TessellationVertexProgram(appdata v){
 				ControlPoint p;
 				p.vertex = v.vertex;
@@ -56,7 +65,7 @@ Shader "Custom/QuadTessellationHLSL"
 			};
 			
  
-			hsConstOut hull_constant_function(InputPatch<ControlPoint, 4> patch)
+			hsConstOut hull_constant_function(InputPatch<ControlPoint, 4> patch, uint PatchID : SV_PrimitiveID)
 			{
 				hsConstOut output;
 				output.Edges[0] = output.Edges[1] = output.Edges[2] = output.Edges[3] = output.Inside[0] = output.Inside[1] = 16;  
@@ -68,15 +77,16 @@ Shader "Custom/QuadTessellationHLSL"
 				[outputtopology("triangle_cw")]
 				[outputcontrolpoints(4)]
 				[patchconstantfunc("hull_constant_function")]			
-			ControlPoint HullProgram(InputPatch<ControlPoint, 4>patch, uint id: SV_OutputControlPointID)
+			ControlPoint HullProgram(InputPatch<ControlPoint, 4> patch, uint id: SV_OutputControlPointID)
 			{
 				return patch[id];
 			}
  
 				[domain("quad")]
 			v2f DomainProgram(hsConstOut factors, 
-								const OutputPatch<ControlPoint, 4>patch,
-								float2 UV:SV_DomainLocation)
+								const OutputPatch<ControlPoint, 4> patch,
+								float2 UV:SV_DomainLocation,
+								uint id: SV_PrimitiveID)
 			{
 				float4 a = patch[0].vertex;
 				float4 b = patch[1].vertex;
@@ -94,28 +104,28 @@ Shader "Custom/QuadTessellationHLSL"
 				float3 n0 = cross(a.xyz-b.xyz,a.xyz-d.xyz);
 				float4 normal = float4(normalize(n0),1);
 
-				float scale = 0.000001;
+				float scale = 0.0001;
 
 				float x = UV.x*10 - 5;
 				float y = UV.y*10 - 5;
 
 				//float height = scale * (pow(x,3) + pow(y,3));
 
-				int i = int(a.x);
-				int j = int(a.y);
+				int i = int(a.x*800 + 7); // 800
+				int j = int(a.y*800 + 6);
 
 
-				float height = (Params[0]*pow(x,3)
-							+	Params[1]*pow(x,2)
+/*				float height = (Params[0]*pow(x,3)
+							+	Params[1]*pow(x,2)*5
 							+	Params[2]*x
 							+	Params[3]*pow(y,3)
-							+	Params[4]*pow(y,2)
-							+	Params[5]*y	
+							+	Params[4]*pow(y,2)*5
+							+	Params[5]*y
 							+	Params[6]*1
-														)*scale;
+														)*scale;*/
 
 
-				//float height = Params[0]*scale;
+				float height = Params4[i*12 + j]*scale;
 
 				appdata data; 
 			   	data.vertex = vFinal + height * normal;
