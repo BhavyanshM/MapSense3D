@@ -16,45 +16,50 @@ public class PlanarRegionSubscriber : MonoBehaviour
     public MeshRenderer meshRenderer;
 
     private float[] paramData0;
-    private float[] paramData1;
-    private float[] paramData2;
-    private float[] paramData3;
-    private float[] paramData4;
-    private float[] paramData5;
-    private float[] paramData6;
-    private float[] paramData7;
-    
     private byte[] paramDataBytes;
     private MaterialPropertyBlock matBlock;
 
 
     void Start()
     {
-        rosConnector = GetComponent<RosConnector>();
-        var subscription_id = rosConnector.RosSocket.Subscribe<map_sense.PlanarRegions>("/map/regions", RegionMsgHandler);
-        paramData0 = new float[192];
-        paramData1 = new float[192];
-        paramData2 = new float[192];
-        paramData3 = new float[192];
-        paramData4 = new float[192];
-        paramData5 = new float[192];
-        paramData6 = new float[192];
-        paramData7 = new float[192];
-
-        meshRenderer.material = new Material(Shader.Find("Custom/QuadTessellationHLSL"));
         
+        // rosConnector = GetComponent<RosConnector>();
+        // var subscription_id = rosConnector.RosSocket.Subscribe<map_sense.PlanarRegions>("/map/regions", RegionMsgHandler);
+        // paramData0 = new float[20];
+
+        paramData0 = new float[1536];
+        dtex = new Texture2D(12, 16, TextureFormat.RGBAFloat, false);
+        meshRenderer.material = new Material(Shader.Find("Custom/QuadTessellationHLSL"));
+        meshRenderer.material.SetTexture("_MainTex", dtex);
+
+
         // paramDataBytes = new byte[paramData.Length*sizeof(float)];
         // dtex = new Texture2D(1, 1, TextureFormat.RGBAFloat, false);
+
+
+        // meshRenderer.material.SetFloatArray("Params0", paramData0);
         
-        // meshRenderer.material.SetTexture("_MainTex", dtex);
-        meshRenderer.material.SetFloatArray("Params0", paramData0);
-        meshRenderer.material.SetFloatArray("Params1", paramData1);
-        meshRenderer.material.SetFloatArray("Params2", paramData2);
-        meshRenderer.material.SetFloatArray("Params3", paramData3);
-        meshRenderer.material.SetFloatArray("Params4", paramData4);
-        meshRenderer.material.SetFloatArray("Params5", paramData5);
-        meshRenderer.material.SetFloatArray("Params6", paramData6);
-        meshRenderer.material.SetFloatArray("Params7", paramData7);
+        string[] lines = System.IO.File.ReadAllLines(@"/home/quantum/catkin_ws/src/map_sense/scripts/patches.csv");
+        for (int i = 0; i < paramData0.Length; i++)
+        {
+            paramData0[i] = float.Parse(lines[i]);
+            
+        }
+
+        for (int i = 0; i < dtex.width; i++){
+            for (int j = 0; j < dtex.height; j++) {
+                
+                dtex.SetPixel(i%12,i/12, new Color(0.5f,0.7f,0.3f,0.0f));
+                
+            }
+        }
+        dtex.Apply();
+        meshRenderer.material.SetTexture("_MainTex",dtex);
+
+        
+        
+        Debug.Log(SystemInfo.SupportsTextureFormat(TextureFormat.RGBAFloat));
+        
     } 
 
     private void RegionMsgHandler(map_sense.PlanarRegions message)
@@ -73,45 +78,23 @@ public class PlanarRegionSubscriber : MonoBehaviour
     void Update()
     {
 
-        // int id = 6;
+        // int height = 0;
+        // for(int i = 1; i<paramData0.Length-1; i++)
+        // {
+        //     height = i;
+        //     paramData0[i] = height;
         //
-        // paramData0[id] += 1;
-        // paramData0[id] %= 100;
-        //
-        // paramData1[id] += 4;
-        // paramData1[id] %= 400;
-        //
-        // paramData2[id] += 6;
-        // paramData2[id] %= 600;
-        //
-        // paramData3[id] += 8;
-        // paramData3[id] %= 800;
-        //
-        // paramData4[id] += 10;
-        // paramData4[id] %= 1000;
-        //
-        // paramData5[id] += 12;
-        // paramData5[id] %= 1200;
-        //
-        // paramData6[id] += 3;
-        // paramData6[id] %= 1400;
-        //
-        // paramData7[id] += 2;
-        // paramData7[id] %= 1600;
-
-        int height = 0;
-        for(int i = 0; i<paramData0.Length; i++)
-        {
-            height = i;
-            paramData0[i] = height;
-            paramData1[i] = height;
-            paramData2[i] = height;
-            paramData3[i] = height;
-            paramData4[i] = height;
-            paramData5[i] = height;
-            paramData6[i] = height;
-            paramData7[i] = height;
+        // }
+        
+        for (int i = 0; i < dtex.width; i++){
+            for (int j = 0; j < dtex.height; j++) {
+                
+                dtex.SetPixel(i%12,i/12, new Color(0.5f,0.7f,0.3f,0.0f));
+                
+            }
         }
+        dtex.Apply();
+        meshRenderer.material.SetTexture("_MainTex",dtex);
         
         // paramData4[0] += 1;
         // paramData4[0] %= 100;
@@ -124,14 +107,7 @@ public class PlanarRegionSubscriber : MonoBehaviour
         // dtex.Apply();
         // meshRenderer.material.SetTexture("_MainTex", dtex);
         
-        meshRenderer.material.SetFloatArray("Params0", paramData0);
-        meshRenderer.material.SetFloatArray("Params1", paramData1);
-        meshRenderer.material.SetFloatArray("Params2", paramData2);
-        meshRenderer.material.SetFloatArray("Params3", paramData3);
-        meshRenderer.material.SetFloatArray("Params4", paramData4);
-        meshRenderer.material.SetFloatArray("Params5", paramData5);
-        meshRenderer.material.SetFloatArray("Params6", paramData6);
-        meshRenderer.material.SetFloatArray("Params7", paramData7);
+        // meshRenderer.material.SetFloatArray("Params0", paramData0);
 
 
     }

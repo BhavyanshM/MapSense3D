@@ -2,6 +2,9 @@
 //source: https://forum.unity3d.com/threads/my-own-terrane-shader-is-not-working.283406/
 Shader "Custom/QuadTessellationHLSL" 
 {
+    Properties{
+        _MainTex ("Texture", 2D) = "white" {}
+    }
 	SubShader 
 	{
 		Pass 
@@ -9,14 +12,7 @@ Shader "Custom/QuadTessellationHLSL"
 			Cull Off
 			CGPROGRAM
 			
-			float Params0[192];
-			float Params1[192];
-			float Params2[192];
-			float Params3[192];
-			float Params4[192];
-			float Params5[192];
-			float Params6[192];
-			float Params7[192];
+			//float Params0[20];
 			
 			#pragma vertex TessellationVertexProgram
 			#pragma hull HullProgram
@@ -45,6 +41,7 @@ Shader "Custom/QuadTessellationHLSL"
 				float4 vertex : SV_POSITION;
 				float2 uv : TEXCOORD0;
 			}; 
+			
 // ---------------------------------------------------------------
         
 
@@ -82,6 +79,8 @@ Shader "Custom/QuadTessellationHLSL"
 				return patch[id];
 			}
  
+ 
+                sampler2D_float _MainTex;
 				[domain("quad")]
 			v2f DomainProgram(hsConstOut factors, 
 								const OutputPatch<ControlPoint, 4> patch,
@@ -110,22 +109,19 @@ Shader "Custom/QuadTessellationHLSL"
 				float y = UV.y*10 - 5;
 
 				//float height = scale * (pow(x,3) + pow(y,3));
+				float4 h = tex2Dlod (_MainTex, float4(patch[0].uv,0,0));
 
 				int i = int(a.x*800 + 7); // 800
 				int j = int(a.y*800 + 6);
 
 
-/*				float height = (Params[0]*pow(x,3)
-							+	Params[1]*pow(x,2)*5
-							+	Params[2]*x
-							+	Params[3]*pow(y,3)
-							+	Params[4]*pow(y,2)*5
-							+	Params[5]*y
-							+	Params[6]*1
-														)*scale;*/
+				//float height0 = Params1[i*12+j]*pow(x,3);
+				
+                float height = (pow(x,2) + pow(y,2))*scale*h.r;
 
+				//float height = Params5[i*12 + j]*pow(x,2)*scale;
 
-				float height = Params4[i*12 + j]*scale;
+                //float height = (    (pow(x,2) + pow(y,2))*2       +    (pow(i-8,2) + pow(j-6,2))*10    )*scale*0.1;
 
 				appdata data; 
 			   	data.vertex = vFinal + height * normal;
